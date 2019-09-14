@@ -12,13 +12,11 @@ $WindowAPIDef = @"
 		}
 "@
 
+$WindowAPI = Add-Type -Namespace Win32 -Name Funcs -MemberDefinition $WindowAPIDef -PassThru
+
 Function MoveWindowtoBottom() {
-	$WindowAPI = Add-Type -Namespace Win32 -Name Funcs -MemberDefinition $WindowAPIDef -PassThru
-	
 	$WindowName = Get-Process $Process |where {$_.mainWindowTItle}
-
 	$GetWindow = $WindowAPI::FindWindow([IntPtr]::Zero, $WindowName.MainWindowTitle)
-
 	$WindowAPI::MovetoBottom($GetWindow)
 }
 
